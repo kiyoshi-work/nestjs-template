@@ -2,7 +2,7 @@ targetPort: 3000
 
 ingress:
   enable: true
-  host: cryptos-ai-server-dev.uslab.dev
+  host: nestjs-template-server-dev.uslab.dev
 
 envFrom:
   configMaps:
@@ -10,7 +10,6 @@ envFrom:
     - name: dev-postgres
     - name: dev-redis
     - name: dev-milvus
-    - name: cryptos-ai-server
 
 resources:
   requests:
@@ -21,11 +20,11 @@ resources:
     memory: '400Mi'
 
 workers:
-  - name: cryptos-ai-worker
+  - name: nestjs-template-worker
     replicas: 1
     envFrom:
       configMaps:
-        - name: cryptos-ai-worker
+        - name: nestjs-template-worker
     resources:
       requests:
         cpu: '50m'
