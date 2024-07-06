@@ -1,0 +1,42 @@
+targetPort: 3000
+
+ingress:
+  enable: true
+  host: api.cryptos-ai.pro
+  annotations:
+    cert-manager.io/cluster-issuer: xlab-le-cluster-issuer
+
+tls:
+  - hosts:
+      - '*.cryptos-ai.pro'
+    secretName: wildcard-cryptos-ai-pro
+
+envFrom:
+  configMaps:
+    - name: cryptos-ai-server
+
+resources:
+  requests:
+    cpu: '50m'
+    memory: '200Mi'
+  limits:
+    cpu: '200m'
+    memory: '400Mi'
+
+workers:
+  - name: cryptos-ai-worker
+    replicas: 1
+    envFrom:
+      configMaps:
+        - name: cryptos-ai-worker
+    resources:
+      requests:
+        cpu: '50m'
+        memory: '200Mi'
+      limits:
+        cpu: '200m'
+        memory: '400Mi'
+
+healthCheck:
+  enable: true
+  path: /health

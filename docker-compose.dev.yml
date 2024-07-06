@@ -1,0 +1,58 @@
+version: "3.8"
+services:
+  app:
+    image: nestjs-template-server:1.0.0-dev
+    container_name: nestjs-template-server-dev
+    build:
+      context: .
+      dockerfile: docker/nest/dev.dockerfile
+    working_dir: /home/node/workspace
+    command: npm run start:debug
+    restart: unless-stopped
+    tty: true
+    volumes:
+      - .:/home/node/workspace
+      - /home/node/workspace/node_modules
+    networks:
+      -  nestjs-template-network
+    env_file:
+      - .env.dev
+    ports:
+      - '8027:8000'
+
+  database:
+    container_name: nestjs-template-database
+    image: postgres:14.1
+    restart: unless-stopped
+    volumes:
+      - nestjs-template-database:/var/lib/postgres
+      - ./docker/postgres:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: 123456
+    ports:
+      - 5442:5432
+    networks:
+      - nestjs-template-network
+
+  redis:
+    container_name: nestjs-template-redis
+    image: redis
+    restart: unless-stopped
+    ports:
+      - 6386:6379
+    command: redis-server --save 20 1 --loglevel warning
+    networks:
+      - nestjs-template-network
+    volumes:
+      - nestjs-template-redis:/data
+
+networks:
+  nestjs-template-network:
+    driver: bridge
+
+volumes:
+  nestjs-template-redis:
+    driver: local
+  nestjs-template-database:
+    driver: local
