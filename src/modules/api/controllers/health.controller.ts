@@ -1,6 +1,14 @@
 import { UserRepository } from '@/database/repositories';
-import { Controller, ForbiddenException, Get } from '@nestjs/common';
+import { ResponseMessage } from '@/shared/decorators/response-message.decorator';
+import { ApiBaseResponse } from '@/shared/swagger/decorator/api-response.decorator';
+import {
+  Controller,
+  ForbiddenException,
+  Get,
+  UseInterceptors,
+} from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { FormatResponseInterceptor } from '../interceptors';
 // const Sentry = require("@sentry/node");
 // import * as Sentry from '@sentry/node';
 
@@ -20,6 +28,7 @@ export class HealthController {
   }
 
   @Get('')
+  @ResponseMessage('Hello')
   async healthCheck() {
     return 1;
   }
