@@ -9,8 +9,8 @@ export const configDb = registerAs(
     username: process.env.DB_USERNAME || 'root',
     password: process.env.DB_PASSWORD || 'root',
     database: process.env.DB_DATABASE || 'postgres',
-    synchronize: Boolean(process.env.DB_SYNC) || false,
+    synchronize: Boolean(Number(process.env.DB_SYNC)) || false,
     autoLoadEntities: true,
-    logging: false,
+    logging: Boolean(Number(process.env.DB_DEBUG)) || false,
   }),
 );
