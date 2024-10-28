@@ -12,7 +12,6 @@ import { CacheModule, CacheStore } from '@nestjs/cache-manager';
 import { configAuth } from './configs/auth';
 import { configCache } from './configs/cache';
 import { FormatResponseInterceptor } from './interceptors';
-import { LoggerModule } from 'nestjs-pino';
 @Module({
   imports: [
     ThrottlerModule.forRoot({
@@ -47,51 +46,17 @@ import { LoggerModule } from 'nestjs-pino';
       }),
       inject: [ConfigService],
     }),
-    LoggerModule.forRoot({
-      pinoHttp: {
-        level: process.env.APP_ENV === 'production' ? 'info' : 'debug',
-        transport: {
-          target: 'pino-pretty',
-          options: {
-            colorize: true,
-            singleLine: true,
-            ignore: 'pid,hostname',
-            messageFormat: '{msg}',
-            translateTime: 'SYS:standard',
-          },
-        },
-        // serializers: {
-        //   req: () => undefined,
-        //   res: () => undefined,
-        // },
-        customProps: (req, res) => ({
-          context: 'HTTP',
-        }),
-        customSuccessMessage: (req, res) => {
-          if (req && res) {
-            return `${req.method} ${req.url}`;
-          }
-          return 'Request completed';
-        },
-        customErrorMessage: (req, res, error) => {
-          if (req) {
-            return `${req.method} ${req.url} failed with error: ${error.message}`;
-          }
-          return 'Request failed';
-        },
-      },
-    }),
   ],
   controllers: [HealthController],
   providers: [
-    {
-      provide: APP_GUARD,
-      useClass: CustomThrottlerGuard,
-    },
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: FormatResponseInterceptor,
-    },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: CustomThrottlerGuard,
+    // },
+    // {
+    //   provide: APP_INTERCEPTOR,
+    //   useClass: FormatResponseInterceptor,
+    // },
   ],
 })
 export class ApiModule implements OnApplicationBootstrap {

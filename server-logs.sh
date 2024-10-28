@@ -1,1 +1,0 @@
-docker logs -f --tail 2000 nestjs-template-server-dev

@@ -2,7 +2,7 @@ targetPort: 3000
 
 ingress:
   enable: true
-  host: nestjs-template-server-dev.uslab.dev
+  host: nestjs-template-server-dev.dev
 
 envFrom:
   configMaps:
