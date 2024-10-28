@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Module, RequestMethod } from '@nestjs/common';
 import { ApiModule } from '@/api';
 import { WorkerModule } from '@/worker/worker.module';
 import { LoggerModule } from 'nestjs-pino';
@@ -49,6 +49,7 @@ if (isWorker) {
           return 'Request failed';
         },
       },
+      exclude: [{ method: RequestMethod.ALL, path: 'health' }],
     }),
   ],
 })
