@@ -10,8 +10,8 @@ const isApi = Boolean(Number(process.env.IS_API || 0));
 const PORT = process.env.PORT || '3000';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
-    logger: false,
-    bufferLogs: true,
+    // logger: false,
+    // bufferLogs: true,
   });
 
   if (isApi) {

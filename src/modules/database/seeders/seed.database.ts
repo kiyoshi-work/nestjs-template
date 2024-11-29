@@ -10,7 +10,7 @@ export class SeedDatabase implements OnApplicationBootstrap {
 
   async onApplicationBootstrap() {
     const isWorker = Boolean(Number(process.env.IS_WORKER || 0));
-    if (isWorker) {
+    if (!isWorker) {
       return;
     }
     const start = Date.now();

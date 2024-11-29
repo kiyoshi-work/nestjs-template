@@ -9,8 +9,6 @@ import {
 } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { FormatResponseInterceptor } from '../interceptors';
-// const Sentry = require("@sentry/node");
-// import * as Sentry from '@sentry/node';
 
 @ApiTags('Health')
 @Controller('health')
@@ -23,7 +21,6 @@ export class HealthController {
       throw new Error('Test error');
     } catch (e) {
       throw e;
-      // Sentry.captureException(e);
     }
   }
 

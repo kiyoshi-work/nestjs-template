@@ -12,6 +12,7 @@ import { CacheModule, CacheStore } from '@nestjs/cache-manager';
 import { configAuth } from './configs/auth';
 import { configCache } from './configs/cache';
 import { FormatResponseInterceptor } from './interceptors';
+import { BusinessModule } from '@/business/business.module';
 @Module({
   imports: [
     ThrottlerModule.forRoot({
@@ -20,6 +21,7 @@ import { FormatResponseInterceptor } from './interceptors';
     }),
     DatabaseModule,
     QueueModule,
+    BusinessModule,
     CacheModule.registerAsync({
       imports: [ConfigModule],
       inject: [ConfigService],

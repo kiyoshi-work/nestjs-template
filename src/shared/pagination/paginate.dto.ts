@@ -1,12 +1,20 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsNumber, IsOptional, Max, Min } from 'class-validator';
+import {
+  IsIn,
+  IsNumber,
+  IsOptional,
+  IsString,
+  Max,
+  Min,
+} from 'class-validator';
 import { IPaginateRequest } from './pagination.interface';
 import {
   MAX_PAGINATION_TAKEN,
   MIN_PAGINATION_TAKEN,
   PAGINATION_TAKEN,
 } from './constants';
+import { RequireWith } from '../validator/decorators/requireWith';
 
 export enum ESortType {
   ASC = 'ASC',
@@ -32,13 +40,20 @@ export class PaginateDto implements IPaginateRequest {
   @IsNumber()
   page?: number;
 
-  @ApiPropertyOptional()
-  sort_field: string = 'created_at';
+  @ApiPropertyOptional({
+    nullable: true,
+  })
+  @IsOptional()
+  @IsString()
+  @RequireWith(['sort_type'])
+  sort_field?: string;
 
   @ApiPropertyOptional({
     type: 'enum',
     enum: ESortType,
   })
   @IsOptional()
+  @IsIn(Object.values(ESortType))
+  // @RequireWith(['sort_field'])
   sort_type: ESortType = ESortType.DESC;
 }
