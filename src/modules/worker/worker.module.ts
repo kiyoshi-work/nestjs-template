@@ -6,7 +6,8 @@ import { ScheduleService } from './schedulers/schedule.service';
 import { ScheduleModule } from '@nestjs/schedule';
 import { ApiModule } from '@/api';
 import { BullModule } from '@nestjs/bull';
-import { UserConsumer } from './consumers';
+import { UserConsumer, TelegramBotConsumer } from './consumers';
+import { TelegramModule } from '@/telegram/telegram.module';
 
 const isWorker = Boolean(Number(process.env.IS_WORKER || 0));
 
@@ -14,7 +15,7 @@ let consumers = [];
 let schedulers = [];
 
 if (isWorker) {
-  consumers = [UserConsumer];
+  consumers = [UserConsumer, TelegramBotConsumer];
   schedulers = [ScheduleService];
 }
 
@@ -22,6 +23,7 @@ if (isWorker) {
   imports: [
     ApiModule,
     DatabaseModule,
+    TelegramModule,
     BullModule.forRootAsync({
       imports: [ConfigModule],
       useFactory(config: ConfigService) {

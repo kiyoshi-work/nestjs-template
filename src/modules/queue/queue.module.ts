@@ -34,6 +34,9 @@ import { QUEUE_NAME } from '@/shared/constants/queue';
     BullModule.registerQueue({
       name: QUEUE_NAME.USER,
     }),
+    BullModule.registerQueue({
+      name: QUEUE_NAME.TELEGRAM_BOT,
+    }),
   ],
   controllers: [],
   providers: [QueueService],

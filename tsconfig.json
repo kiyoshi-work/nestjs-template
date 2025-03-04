@@ -27,6 +27,7 @@
       "@/shared/*": ["shared/*"],
       "@/worker/*": ["modules/worker/*"],
       "@/business/*": ["modules/business/*"],
+      "@/telegram/*": ["modules/telegram/*"],
       "@/queue/*": ["modules/queue/*"]
     }
   },
