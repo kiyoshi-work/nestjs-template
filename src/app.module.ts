@@ -6,7 +6,7 @@ import { TelegramModule } from '@/telegram/telegram.module';
 
 const isApi = Boolean(Number(process.env.IS_API || 0));
 const isWorker = Boolean(Number(process.env.IS_WORKER || 0));
-const isBot = Boolean(Number(process.env.IS_BOT || 0));
+const isBot = Boolean(Number(process.env.IS_TELEGRAM_BOT || 0));
 
 let _modules = [];
 if (isApi) {

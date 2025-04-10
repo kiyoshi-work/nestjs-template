@@ -24,7 +24,7 @@ export class TelegramBot {
     private readonly queueService: QueueService,
   ) {
     const token = this.configService.get<string>('telegram.token');
-    const isBot = Boolean(Number(process.env.IS_BOT || 0));
+    const isBot = Boolean(Number(process.env.IS_TELEGRAM_BOT || 0));
     if (isBot) {
       this.bot = new TelegramBotApi(token, {
         polling: true,
