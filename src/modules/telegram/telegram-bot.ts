@@ -60,7 +60,7 @@ export class TelegramBot {
     options?: SendMessageOptions,
   ) {
     try {
-      return this.bot.sendMessage(chatId, text, options);
+      return await this.bot.sendMessage(chatId, text, options);
     } catch (error) {
       console.log('🚀 ~ file: telegram-bot.ts:89 ~ error:', error);
     }
